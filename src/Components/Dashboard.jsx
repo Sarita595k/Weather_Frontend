@@ -12,6 +12,11 @@ const Dashboard = () => {
         description: "Partly Cloudy",
         humidity: 60,
         wind: 12,
+        temp_min: 0,
+        temp_max: 0,
+        sunrise: "00:00",
+        sunset: "00:00"
+
     });
     const [favorites, setFavorites] = useState([]);
     const handleLogout = () => {
@@ -19,7 +24,16 @@ const Dashboard = () => {
         navigate("/login");
     };
 
+    const formatTime = (unixTime, timezoneOffset) => {
+        const date = new Date((unixTime + timezoneOffset) * 1000);
 
+        return date.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+            timeZone: "UTC"
+        });
+    }
     const handleSearch = async (selectedCity) => {
         const searchCity = selectedCity || city;
 
@@ -27,7 +41,7 @@ const Dashboard = () => {
 
         try {
             const res = await fetch(
-                `http://localhost:3000/api/weather/${searchCity}`
+                `${import.meta.env.VITE_BASE_URL}/api/weather/${searchCity}`
             );
 
             const data = await res.json();
@@ -39,9 +53,20 @@ const Dashboard = () => {
                     name: weatherData.name,
                     temp: weatherData.main.temp,
                     description: weatherData.weather[0].description,
-                    condition: weatherData.weather[0].main,   // 🔥 ADD THIS
+                    condition: weatherData.weather[0].main,
                     humidity: weatherData.main.humidity,
                     wind: weatherData.wind.speed,
+                    icon: weatherData.weather.icon,
+                    temp_min: weatherData.main.temp_min,
+                    temp_max: weatherData.main.temp_max,
+                    sunrise: formatTime(
+                        weatherData.sys.sunrise,
+                        weatherData.timezone
+                    ),
+                    sunset: formatTime(
+                        weatherData.sys.sunset,
+                        weatherData.timezone
+                    )
                 });
 
                 setCity("");
@@ -60,7 +85,6 @@ const Dashboard = () => {
         try {
             const token = localStorage.getItem("token");
 
-            // ✅ Check if already added
             const alreadyAdded = favorites.includes(
                 weather.name.toLowerCase()
             );
@@ -137,7 +161,7 @@ const Dashboard = () => {
     };
     return (
         <div className={`min-h-screen ${getBackground()} transition-all duration-700`}>
-            {/* 🔥 Simple Top Bar */}
+            {/* <div className={`bg-[url(${bg.jpg})] bg-cover bg-center h-screen`}> */}
             <div className="flex justify-between items-center px-6 py-4">
                 <h1 className="text-2xl font-bold text-white">
                     🌤 Weather Dashboard
@@ -202,6 +226,31 @@ const Dashboard = () => {
                                 {weather.wind} km/h
                             </p>
                             <p className="text-gray-600 text-sm">Wind Speed</p>
+                        </div>
+                        <div className="bg-indigo-100 rounded-2xl p-6 text-center shadow">
+                            <p className="text-2xl font-semibold text-gray-800">
+                                {weather.temp_min}°C
+                            </p>
+                            <p className="text-gray-600 text-sm capitalize">min temp</p>
+                        </div>
+                        <div className="bg-indigo-100 rounded-2xl p-6 text-center shadow">
+                            <p className="text-2xl font-semibold text-gray-800">
+                                {weather.temp_max}°C
+                            </p>
+                            <p className="text-gray-600 text-sm">Wind Speed</p>
+                        </div>
+
+                        <div className="bg-indigo-100 rounded-2xl p-6 text-center shadow">
+                            <p className="text-2xl font-semibold text-gray-800">
+                                {weather.sunrise}
+                            </p>
+                            <p className="text-gray-600 text-sm">Sunrise</p>
+                        </div>
+                        <div className="bg-indigo-100 rounded-2xl p-6 text-center shadow">
+                            <p className="text-2xl font-semibold text-gray-800">
+                                {weather.sunset}
+                            </p>
+                            <p className="text-gray-600 text-sm capitalize">sunset</p>
                         </div>
                     </div>
                 </div>

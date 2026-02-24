@@ -14,7 +14,7 @@ const Home = () => {
                         const { latitude, longitude } = position.coords;
 
                         const res = await fetch(
-                            `http://localhost:3000/api/weather/current?lat=${latitude}&lon=${longitude}`
+                            `${import.meta.env.VITE_BASE_URL}/api/weather/current?lat=${latitude}&lon=${longitude}`
                         );
 
                         const data = await res.json();
@@ -42,7 +42,7 @@ const Home = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-400 via-sky-500 to-indigo-600 text-white">
+        <div className="min-h-screen bg-linear-to-br from-blue-400 via-sky-500 to-indigo-600 text-white">
             <Navbar />
 
             <div className="flex flex-col items-center justify-center text-center px-6 mt-20">
