@@ -95,7 +95,7 @@ const Dashboard = () => {
             }
 
             const res = await fetch(
-                "http://localhost:3000/api/favorite",
+                `${import.meta.env.VITE_BASE_URL}/api/favorite`,
                 {
                     method: "POST",
                     headers: {
@@ -128,7 +128,7 @@ const Dashboard = () => {
             const token = localStorage.getItem("token");
 
             const res = await fetch(
-                "http://localhost:3000/api/favorite/all",
+                `${import.meta.env.VITE_BASE_URL}/api/favorite/all`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
