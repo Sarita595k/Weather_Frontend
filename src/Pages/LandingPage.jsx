@@ -1,9 +1,9 @@
 import React from 'react'
-import Background from '../Components/Background'
+import { Signup } from '../Components/SignUp'
 
 const LandingPage = () => {
     return (
-        <div><Background /></div>
+        <div><Signup /></div>
     )
 }
 
