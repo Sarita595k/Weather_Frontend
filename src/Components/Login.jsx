@@ -32,6 +32,11 @@ const Login = () => {
 
             const data = await res.json();
 
+            if (res.status === 429) {
+                setError(data.message);
+                return;
+            }
+
             if (res.ok && data.success) {
                 // Save token
                 localStorage.setItem("token", data.token);
