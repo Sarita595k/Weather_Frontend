@@ -13,7 +13,7 @@ const Favorite = ({ favorites, setFavorites }) => {
             const weatherDataArray = await Promise.all(
                 favorites.map(async (city) => {
                     const res = await fetch(
-                        `http://localhost:3000/api/weather/${city}`
+                        `${import.meta.env.VITE_BASE_URL}/api/weather/${city}`
                     );
                     const data = await res.json();
 
@@ -40,7 +40,7 @@ const Favorite = ({ favorites, setFavorites }) => {
             const token = localStorage.getItem("token");
 
             const res = await fetch(
-                `http://localhost:3000/api/favorite/${city}`,
+                `${import.meta.env.VITE_BASE_URL}/api/favorite/${city}`,
                 {
                     method: "DELETE",
                     headers: {
