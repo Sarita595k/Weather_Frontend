@@ -39,6 +39,7 @@ const Dashboard = () => {
                     name: weatherData.name,
                     temp: weatherData.main.temp,
                     description: weatherData.weather[0].description,
+                    condition: weatherData.weather[0].main,   // 🔥 ADD THIS
                     humidity: weatherData.main.humidity,
                     wind: weatherData.wind.speed,
                 });
@@ -120,9 +121,22 @@ const Dashboard = () => {
             console.log(error);
         }
     };
+    const getBackground = () => {
+        switch (weather.condition) {
+            case "Clouds":
+                return "bg-gradient-to-br from-gray-400 via-gray-500 to-gray-700";
+            case "Clear":
+                return "bg-gradient-to-br from-yellow-300 via-orange-400 to-yellow-500";
+            case "Snow":
+                return "bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300";
+            case "Rain":
+                return "bg-gradient-to-br from-blue-400 via-indigo-500 to-gray-700";
+            default:
+                return "bg-gradient-to-br from-sky-400 via-blue-500 to-indigo-600";
+        }
+    };
     return (
-        <div className="min-h-screen bg-linear-to-br from-sky-400 via-blue-500 to-indigo-600">
-
+        <div className={`min-h-screen ${getBackground()} transition-all duration-700`}>
             {/* 🔥 Simple Top Bar */}
             <div className="flex justify-between items-center px-6 py-4">
                 <h1 className="text-2xl font-bold text-white">
