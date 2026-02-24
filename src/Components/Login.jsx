@@ -9,12 +9,13 @@ const Login = () => {
         email: "",
         password: "",
     })
-
+    const [error, setError] = useState("")
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         })
+        setError("")
     }
 
     const handleSubmit = async (e) => {
@@ -38,17 +39,17 @@ const Login = () => {
                 // Go to dashboard
                 navigate("/dashboard");
             } else {
-                alert(data.message || "Login failed");
+                setError(data.message || "Login failed");
             }
 
         } catch (error) {
             console.log("Error:", error);
-            alert("Server not running");
+            setError("Server not running");
         }
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700">
+        <div className="min-h-screen bg-linear-to-br from-blue-600 via-indigo-600 to-purple-700">
             <Navbar />
 
             <div className="flex items-center justify-center px-4 mt-20">
@@ -57,7 +58,11 @@ const Login = () => {
                     <h2 className="text-3xl font-bold text-center mb-6">
                         Login
                     </h2>
-
+                    {error && (
+                        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm transition-all duration-300">
+                            {error}
+                        </div>
+                    )}
                     <form onSubmit={handleSubmit} className="space-y-5">
 
                         <input
@@ -97,7 +102,7 @@ const Login = () => {
 
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 

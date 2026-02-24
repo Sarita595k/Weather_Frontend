@@ -7,9 +7,11 @@ const Signup = () => {
         email: "",
         password: "",
     });
+    const [error, setError] = useState("");
     const navigate = useNavigate()
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+        setError("")
     };
 
     const handleSubmit = async (e) => {
@@ -36,12 +38,12 @@ const Signup = () => {
                     navigate("/login");
                 }
             } else {
-                alert(data.message || "Signup failed");
+                setError(data.message || "Signup failed");
             }
 
         } catch (error) {
             console.log("Error:", error);
-            alert("Server not running");
+            setError("Server not running");
         }
     };
 
@@ -57,7 +59,11 @@ const Signup = () => {
                     <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
                         Create Account
                     </h2>
-
+                    {error && (
+                        <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm transition-all duration-300">
+                            {error}
+                        </div>
+                    )}
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <input
                             type="text"
