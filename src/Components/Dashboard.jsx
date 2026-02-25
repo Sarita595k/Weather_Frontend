@@ -237,7 +237,7 @@ const Dashboard = () => {
                             <p className="text-2xl font-semibold text-gray-800">
                                 {weather.temp_max}°C
                             </p>
-                            <p className="text-gray-600 text-sm">Wind Speed</p>
+                            <p className="text-gray-600 text-sm capitalize">max temp</p>
                         </div>
 
                         <div className="bg-indigo-100 rounded-2xl p-6 text-center shadow">
