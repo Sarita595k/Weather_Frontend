@@ -10,12 +10,12 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg">
+        <nav className="bg-linear-to-r from-blue-500 to-indigo-600 text-white shadow-lg">
             <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
                 {/* Logo */}
                 <h1 className="text-2xl font-bold tracking-wide">
-                    🌤️ WeatherApp
+                    🌤️ AvsarWeather
                 </h1>
 
                 {/* Links */}
