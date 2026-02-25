@@ -4,11 +4,13 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false); // <-- new state
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setMessage("");
         setError("");
+        setLoading(true); // <-- start loading
 
         try {
             const res = await fetch(
@@ -32,6 +34,8 @@ const ForgotPassword = () => {
             console.log(err);
             setError("Server not responding");
         }
+
+        setLoading(false); // <-- stop loading
     };
 
     return (
@@ -63,9 +67,11 @@ const ForgotPassword = () => {
                     />
                     <button
                         type="submit"
-                        className="w-full py-3 bg-purple-600 text-white rounded-xl font-semibold hover:bg-purple-700 transition duration-300"
+                        disabled={loading} // <-- disable button while loading
+                        className={`w-full py-3 rounded-xl font-semibold text-white transition duration-300 
+              ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-purple-600 hover:bg-purple-700"}`}
                     >
-                        Send Reset Link
+                        {loading ? "Sending..." : "Send Reset Link"} {/* show text based on loading */}
                     </button>
                 </form>
             </div>
